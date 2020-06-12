@@ -1,3 +1,4 @@
+pandas
 bcrypt==3.1.4
 flask-sslify
 flask-compress
