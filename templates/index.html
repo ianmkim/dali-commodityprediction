@@ -1,0 +1,453 @@
+{% extends "template.html" %}
+
+{% block head %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
+<style>
+.lds-ring {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+.lds-ring div {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border: 8px solid #fff;
+  border-radius: 50%;
+  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: #000 transparent transparent transparent;
+}
+.lds-ring div:nth-child(1) {
+  animation-delay: -0.45s;
+}
+.lds-ring div:nth-child(2) {
+  animation-delay: -0.3s;
+}
+.lds-ring div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+@keyframes lds-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+:root {
+  --bg: #f1f1f1;
+  --bg2: #f5f5f5;
+  --radius: 20px;
+  --margin: 10px;
+  --shadow-inset: inset 9px 9px 9px 0 rgba(206, 206, 206, 0.3),
+                  inset -9px -9px 9px 0 rgba(255, 255, 255, 0.6);
+  --shadow-convex: inset -9px -9px 9px 0 rgba(206, 206, 206, 0.3),
+                  inset 9px 9px 9px 0 rgba(255, 255, 255, 0.6);
+  --shadow: -9px -9px 9px 0 rgba(255, 255, 255, 0.62),
+            -1px -1px 1px 0px rgba(255, 255, 255, 0.3),
+            1px 1px 1px 0px rgba(206, 206, 206, 0.15),
+            9px 9px 9px 0 rgba(206, 206, 206, 0.3);
+}
+
+.neumorph {
+    border-radius: var(--radius);
+    border: none;
+    background: var(--bg2);
+    box-shadow: var(--shadow);
+    margin: var(--margin);
+    padding: var(--margin);
+}
+.container .card
+{
+  padding: 25px 20px;
+  background: #ebf5fc;
+  border-radius: 40px;
+  box-shadow: -6px -6px 20px rgba(255,255,255,1), 6px 6px 20px rgba(0,0,0,0.1);
+}
+.container .card:hover
+{
+  box-shadow: inset -6px -6px 20px rgba(255,255,255,0.5), inset 6px 6px 20px rgba(0,0,0,0.05);
+}
+.container .card .imgBx
+{
+  position: relative;
+  text-align: center;
+}
+.container .card .imgBx img
+{
+    width: 100%;
+}
+.container .card .contentBx
+{
+  position: relative;
+  margin-top: 20px;
+}
+.container .card .contentBx h2
+{
+  color: #32a3b1;
+  font-weight: 700;
+  font-size: 1.4em;
+  letter-spacing: 2px;
+}
+.container .card .contentBx p
+{
+  color: #black;
+}
+.container .card .contentBx a
+{
+  display: inline-block;
+  padding: 10px 20px;
+  margin-top: 15px;
+  border-radius: 40px;
+  color: #32a3b1;
+  font-size: 16px;
+  text-decoration: none;
+  box-shadow: -4px -4px 15px rgba(255,255,255,1), 4px 4px 15px rgba(0,0,0,0.1);
+}
+.container .card .contentBx a:hover
+{
+  box-shadow: inset -4px -4px 10px rgba(255,255,255,0.5), inset 4px 4px 10px rgba(0,0,0,0.1);
+}
+.container .card a:hover span
+{
+  display: block;
+  transform: scale(0.98);
+}
+.container .card:hover .imgBx,
+.container .card:hover .contentBx
+{
+  transition-timing-function: ease-out;
+  /* A litttttle slower on the way in */
+  transition: 0.25s;
+}
+</style>
+
+{% endblock %}
+
+
+{% block content %}
+<body class="theme theme_font_neoskeuo theme_space_neoskeuo theme_color_neoskeuo">
+    <h1 style="padding-top: 30px;">Commodity Price Prediction Engine</h1>
+    <p> developer: Ian Kim</p>
+
+	</br>
+
+
+  <!--
+    <a href="#" style="margin-left: 20px;" class="button">Post</a>
+
+    <a href="#" style="margin-left: 20px;" class="button">Archives</a>
+  -->
+
+
+
+
+<div class="neudiv" style="width: 100%;">
+
+  <div class="" style="width: 100%">
+    <div class="contentBx">
+
+      <canvas id="myChart"></canvas>
+
+
+
+    </div>
+  </div>
+</div>
+</br>
+</br>
+<div class="neudiv" style="width: 100%;">
+
+  <div class="" style="width: 100%">
+    <div class="contentBx">
+
+	<input id="price_input" name="price_input" type="number" style="width:100%;" class="input decorator decorator_indent-b_xl" placeholder="Input Prices" autocomplete="off"/>
+  </br>
+    <a id="add_data" href="#" style="float: right; margin-left:0px;" class="button">
+      <div id="spinner"> 
+          <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+      </div>
+      <div id="text">
+        Upload Data
+      </div>
+    </a>
+
+<a id="test_init_add_data" href="#" style=" margin-left:0px;" class="button">
+        Add Init Data
+    </a>
+
+
+    </div>
+  </div>
+</div>
+
+
+</br>
+</br>
+
+
+<div class="neudiv" style="width: 100%;">
+
+  <div class="" style="width: 100%">
+    <div class="contentBx">
+
+      Last price: <h4 id="lastprice"></h4>
+      next predicted price: <h4 id="predprice"></h4>
+      Average percent error: <h4 id="curracc"></h4>
+      times run: <h4 id="daysrun"></h4>
+
+    </div>
+  </div>
+</div>
+
+</body>
+
+<script>
+var ctx = document.getElementById('myChart').getContext('2d');
+var config = {
+    // The type of chart we want to create
+    type: 'line',
+
+    // The data for our dataset
+    data: {
+    },
+
+    // Configuration options go here
+  options: {
+responsive: true,
+				title: {
+					display: true,
+					text: 'Commodity Price vs Prediction'
+				},
+				tooltips: {
+					mode: 'index',
+					intersect: false,
+				},
+				hover: {
+					mode: 'nearest',
+					intersect: true
+				},
+				scales: {
+					xAxes: [{
+						display: true,
+						scaleLabel: {
+							display: true,
+							labelString: 'index (30 min intervals)'
+						}
+					}],
+					yAxes: [{
+						display: true,
+						scaleLabel: {
+							display: true,
+							labelString: 'Value'
+						}
+					}]
+				}
+
+  }
+}
+
+
+window.myLine= new Chart(ctx,config);
+const WINDOW = 20;
+let data = []
+
+var randomScalingFactor = function(){return Math.random()*10;}
+
+var addValDataset = function(datasetName, color){
+  var newDataset = {
+				label: datasetName,
+        borderColor : color,
+				data: [],
+				fill: false
+			};
+
+			for (var index = 0; index < config.data.labels.length; ++index) {
+				newDataset.data.push(randomScalingFactor());
+			}
+
+			config.data.datasets.push(newDataset);
+			window.myLine.update();
+}
+
+var addDataset = function() {
+			var newDataset = {
+				label: 'Dataset ' + config.data.datasets.length,
+				data: [],
+				fill: false
+			};
+
+			for (var index = 0; index < config.data.labels.length; ++index) {
+				newDataset.data.push(randomScalingFactor());
+			}
+
+			config.data.datasets.push(newDataset);
+			window.myLine.update();
+		};
+
+let index = 0
+var addValData = function(price, pred){
+
+  if (config.data.datasets.length > 0) {
+      /*
+        if(config.data.labels.length >= WINDOW ){
+          config.data.labels.shift()
+          config.data.datasets.forEach(function(dataset){
+            dataset.data.shift()
+          })
+
+        }
+        */
+				var month = config.data.labels.length;
+				config.data.labels.push(index);
+        index += 1
+
+        if(pred){
+          config.data.datasets[1].data.push(price)
+        }
+        else{
+          config.data.datasets[0].data.push(price)
+
+        }
+				window.myLine.update();
+			}
+
+}
+
+var addData = function() {
+			if (config.data.datasets.length > 0) {
+        if(config.data.labels.length >= WINDOW){
+          config.data.labels.shift()
+          config.data.datasets.forEach(function(dataset){
+            dataset.data.shift()
+          })
+
+        }
+				var month = config.data.labels.length;
+				config.data.labels.push(month);
+
+				config.data.datasets.forEach(function(dataset) {
+					dataset.data.push(randomScalingFactor());
+				});
+
+				window.myLine.update();
+			}
+		};
+
+
+
+addValDataset("Ground Truth", 'rgb(54,162,235)')
+addValDataset("Predictions", 'rgb(255,99,132)')
+
+//document.getElementById('addData').addEventListener('click',addData);
+//document.getElementById('addDataset').addEventListener('click', addDataset);
+
+//window.setInterval(addData, 500)
+
+
+let prev = 0;
+
+$("#spinner").hide()
+$("#text").show()
+
+let acc = 0;
+let accLength = 0;
+
+var upload_val_price = function(){
+  upload_price($("#price_input").val())
+
+}
+
+
+addValData(0,true)
+
+var upload_price = function(price){
+
+  $("#text").hide()
+  $("#spinner").show()
+
+	  //let prce = $("#price_input").val()
+    let prce = price
+    if(prce === "")
+      prce = "0"
+
+
+    accLength += 1;
+
+  $("#price_input").val("")
+  data.push(prce);
+  addValData(prce, false)
+
+  if (data.length >9){
+    let tempData = data
+    let slicedData = tempData.slice(Math.max(data.length - 10, 0))
+    $.ajax({
+        url : '/predict',
+        type : 'POST',
+        contentType: "application/x-www-form-urlencoded",
+        data : {
+            'slice' : slicedData
+        },
+        dataType:'json',
+        success : function(data) {
+          addValData(parseFloat(data[0]),true)
+          //addValData(parseFloat(data[1]),true)
+          $("#spinner").hide()
+          $("#text").show()
+        },
+        error : function(request,error)
+        {
+            alert("Request: "+JSON.stringify(request));
+        }
+    });
+  }
+  else{
+    addValData(prev, true)
+
+  }
+
+  prev = prce
+
+    if (accLength > 9) {
+        console.log(accLength)
+        if(accLength === 11 || accLength === 12 || accLength === 13 || accLength === 14|| accLength===15 || accLength === 16){
+            config.data.datasets[1].data.shift()
+            config.data.datasets[0].data.shift()
+            config.data.labels.shift()
+        }
+        $("#lastprice").html(prce )
+        let pred_price = config.data.datasets[1].data[config.data.datasets[1].data.length-1]
+        let percDiff = (Math.abs(prce - pred_price)/prce) * 100
+        $("#predprice").html(pred_price)
+        acc += percDiff
+        
+        $("#curracc").html(acc/(accLength-10))
+        $("#daysrun").html(accLength)
+        
+      }
+
+}
+
+let add_init_data = function(){
+  let arr = [28.3, 29.33, 29.18, 28.08,28.08,28.04,28.11,28.06,28.02, 28.05]// answer should be 28.11
+  for(var i = 0; i< arr.length; i++)
+    upload_price(arr[i]);
+}
+
+$("#test_init_add_data").click(add_init_data)
+$("#add_data").click(upload_val_price)
+$("#price_input").keypress(function (e) {
+ var key = e.which;
+ if(key == 13)  // the enter key code
+  {
+    upload_val_price()
+  }
+});
+</script>
+{% endblock %}
