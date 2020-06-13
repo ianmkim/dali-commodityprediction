@@ -36,14 +36,24 @@ def index():
 @app.route('/predict', methods=['POST'])
 def predict():
     input_arr =request.form.getlist('slice[]')
+    try:
+        model = int(request.form.get("model"))
+    except:
+        model = 1
+    try:
+        timeframe = int(request.form.get("timeframe"))
+    except:
+        timeframe = 1
     #test_arr = [28.33, 28.34, 28.32, 28.3, 28.32, 28.27, 28.29, 28.34, 28.3, 28.33] # answer should be 28.18
     print("\n\n\n\n\n\n", input_arr)
-    pred1 = oracle.predict_next_price(input_arr)[0][0]
-    input_arr.pop(0)
-    input_arr.append(pred1)
-    pred2 = oracle.predict_next_price(input_arr)[0][0]
-    return str([pred1, pred2])
+    preds = []
+    for _ in range(timeframe):
+        preds.append(oracle.predict_next_price(input_arr, model)[0][0])
+        input_arr.pop(0)
+        input_arr.append(preds[-1])
+
+    return str(preds)
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0")
+    app.run(debug=True, host="0.0.0.0")
