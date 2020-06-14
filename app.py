@@ -43,7 +43,7 @@ def predict():
     try:
         timeframe = int(request.form.get("timeframe"))
     except:
-        timeframe = 1
+        timeframe = 2
     #test_arr = [28.33, 28.34, 28.32, 28.3, 28.32, 28.27, 28.29, 28.34, 28.3, 28.33] # answer should be 28.18
     print("\n\n\n\n\n\n", input_arr)
     preds = []

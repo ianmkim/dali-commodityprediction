@@ -174,7 +174,7 @@ var upload_price = function(price) {
     data.push(prce);
     addValData(prce, false)
 
-    if (data.length > 9) {
+    if (data.length > 9 && config.data.datasets[1].data.length - config.data.datasets[0].data.length === 0) {
         let tempData = data
         let slicedData = tempData.slice(Math.max(data.length - 10, 0))
         $.ajax({
@@ -187,8 +187,16 @@ var upload_price = function(price) {
             },
             dataType: 'json',
             success: function(data) {
+                /*
+                if (pred) {
+                    config.data.datasets[1].data.push(price)
+                } else {
+                    config.data.datasets[0].data.push(price)
+
+                }
+                */
                 addValData(parseFloat(data[0]), true)
-                    //addValData(parseFloat(data[1]),true)
+                addValData(parseFloat(data[1]),true)
                 $("#spinner").hide()
                 $("#text").show()
             },
@@ -197,7 +205,10 @@ var upload_price = function(price) {
             }
         });
     } else {
-        addValData(prev, true)
+        if(data.length <= 9)
+            addValData(prev,true)
+        $("#spinner").hide()
+        $("#text").show()
     }
 
     prev = prce
