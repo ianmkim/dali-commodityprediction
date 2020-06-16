@@ -182,19 +182,21 @@
         </select>
       </div>
 
-      <!--
       <div class="input-group mb-3">
         <div class="input-group-prepend">
           <label class="input-group-text" for="inputGroupSelect01">Forward Prediction</label>
         </div>
-        <select class="custom-select" id="timeframe-selection">
+        <select class="custom-select" id="predict_mode">
           <option selected>Choose time frame</option>
-          <option value="1">30 min prediction</option>
-          <option value="2">30, 60 min prediction (x2 error)</option>
-          <option value="3">30, 60, 120 min prediction (x3 error)</option>
+          <option value="1">1 (+30m) step ahead</option>
+          <option value="2">2 (+1hr) steps ahead</option>
+          <option value="3">3 (+1.5hr) steps ahead (WARNING)</option>
+          <option value="4">4 (+2hr) steps ahead (WARNING)</option>
+          <option value="5">5 (+2.5hr) steps ahead (WARNING)</option>
+          <option value="6">6 (+3 hr) steps ahead (WARNING)</option>
+          <option value="7">7 (+3.5 hr) steps ahead (WARNING)</option>
         </select>
       </div>
-      -->
 
 
 	<input id="price_input" name="price_input" type="number" style="width:100%;" class="input decorator decorator_indent-b_xl" placeholder="Input Prices" autocomplete="off"/>
@@ -242,5 +244,5 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
-<script src="{{ url_for('static', filename='index.js')}}?20"></script>
+<script src="{{ url_for('static', filename='index.js')}}?10"></script>
 {% endblock %}

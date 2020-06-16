@@ -184,6 +184,7 @@ var upload_price = function(price) {
             data: {
                 'slice': slicedData,
                 "model": $("#model-selection").val(),
+                "timeframe": $("#predict_mode").val()
             },
             dataType: 'json',
             success: function(data) {
@@ -195,8 +196,10 @@ var upload_price = function(price) {
 
                 }
                 */
-                addValData(parseFloat(data[0]), true)
-                addValData(parseFloat(data[1]),true)
+
+                for(var i = 0; i < data.length; i++)
+                    addValData(parseFloat(data[i]),true)
+
                 $("#spinner").hide()
                 $("#text").show()
             },
