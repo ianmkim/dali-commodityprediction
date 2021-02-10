@@ -15,4 +15,4 @@ from sqlalchemy import desc
 @app.route('/')
 @app.route('/index')
 def index():
-    return "hello"
+    return "prediction engine v2.2"

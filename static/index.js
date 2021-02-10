@@ -85,15 +85,6 @@ let index = 0
 var addValData = function(price, pred) {
 
     if (config.data.datasets.length > 0) {
-        /*
-          if(config.data.labels.length >= WINDOW ){
-            config.data.labels.shift()
-            config.data.datasets.forEach(function(dataset){
-              dataset.data.shift()
-            })
-
-          }
-          */
         var month = config.data.labels.length;
         config.data.labels.push(index);
         index += 1
@@ -132,10 +123,6 @@ var addData = function() {
 addValDataset("Ground Truth", 'rgb(54,162,235)')
 addValDataset("Predictions", 'rgb(255,99,132)')
 
-//document.getElementById('addData').addEventListener('click',addData);
-//document.getElementById('addDataset').addEventListener('click', addDataset);
-//window.setInterval(addData, 500)
-
 let prev = 0;
 
 $("#spinner").hide()
@@ -154,15 +141,9 @@ addValData(0, true)
 var upload_price = function(price) {
     var e = document.getElementById("model-selection");
     var strUser = e.options[e.selectedIndex].value;
-    //alert(strUser)
-
-    //alert($("#model-selection").val())
-    //alert($("#timeframe-selection").val())
-
     $("#text").hide()
     $("#spinner").show()
 
-    //let prce = $("#price_input").val()
     let prce = price
     if (prce === "")
         prce = "0"
@@ -188,15 +169,6 @@ var upload_price = function(price) {
             },
             dataType: 'json',
             success: function(data) {
-                /*
-                if (pred) {
-                    config.data.datasets[1].data.push(price)
-                } else {
-                    config.data.datasets[0].data.push(price)
-
-                }
-                */
-
                 for(var i = 0; i < data.length; i++)
                     addValData(parseFloat(data[i]),true)
 

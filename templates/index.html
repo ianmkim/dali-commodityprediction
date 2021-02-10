@@ -4,136 +4,8 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 <!-- Bootstrap CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
-
-<style>
-.lds-ring {
-  display: inline-block;
-  position: relative;
-  width: 80px;
-  height: 80px;
-}
-.lds-ring div {
-  box-sizing: border-box;
-  display: block;
-  position: absolute;
-  width: 64px;
-  height: 64px;
-  margin: 8px;
-  border: 8px solid #fff;
-  border-radius: 50%;
-  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-  border-color: #000 transparent transparent transparent;
-}
-.lds-ring div:nth-child(1) {
-  animation-delay: -0.45s;
-}
-.lds-ring div:nth-child(2) {
-  animation-delay: -0.3s;
-}
-.lds-ring div:nth-child(3) {
-  animation-delay: -0.15s;
-}
-@keyframes lds-ring {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-:root {
-  --bg: #f1f1f1;
-  --bg2: #f5f5f5;
-  --radius: 20px;
-  --margin: 10px;
-  --shadow-inset: inset 9px 9px 9px 0 rgba(206, 206, 206, 0.3),
-                  inset -9px -9px 9px 0 rgba(255, 255, 255, 0.6);
-  --shadow-convex: inset -9px -9px 9px 0 rgba(206, 206, 206, 0.3),
-                  inset 9px 9px 9px 0 rgba(255, 255, 255, 0.6);
-  --shadow: -9px -9px 9px 0 rgba(255, 255, 255, 0.62),
-            -1px -1px 1px 0px rgba(255, 255, 255, 0.3),
-            1px 1px 1px 0px rgba(206, 206, 206, 0.15),
-            9px 9px 9px 0 rgba(206, 206, 206, 0.3);
-}
-
-.neumorph {
-    border-radius: var(--radius);
-    border: none;
-    background: var(--bg2);
-    box-shadow: var(--shadow);
-    margin: var(--margin);
-    padding: var(--margin);
-}
-.container .card
-{
-  padding: 25px 20px;
-  background: #ebf5fc;
-  border-radius: 40px;
-  box-shadow: -6px -6px 20px rgba(255,255,255,1), 6px 6px 20px rgba(0,0,0,0.1);
-}
-.container .card:hover
-{
-  box-shadow: inset -6px -6px 20px rgba(255,255,255,0.5), inset 6px 6px 20px rgba(0,0,0,0.05);
-}
-.container .card .imgBx
-{
-  position: relative;
-  text-align: center;
-}
-.container .card .imgBx img
-{
-    width: 100%;
-}
-.container .card .contentBx
-{
-  position: relative;
-  margin-top: 20px;
-}
-.container .card .contentBx h2
-{
-  color: #32a3b1;
-  font-weight: 700;
-  font-size: 1.4em;
-  letter-spacing: 2px;
-}
-.container .card .contentBx p
-{
-  color: #black;
-}
-.container .card .contentBx a
-{
-  display: inline-block;
-  padding: 10px 20px;
-  margin-top: 15px;
-  border-radius: 40px;
-  color: #32a3b1;
-  font-size: 16px;
-  text-decoration: none;
-  box-shadow: -4px -4px 15px rgba(255,255,255,1), 4px 4px 15px rgba(0,0,0,0.1);
-}
-.container .card .contentBx a:hover
-{
-  box-shadow: inset -4px -4px 10px rgba(255,255,255,0.5), inset 4px 4px 10px rgba(0,0,0,0.1);
-}
-.container .card a:hover span
-{
-  display: block;
-  transform: scale(0.98);
-}
-.container .card:hover .imgBx,
-.container .card:hover .contentBx
-{
-  transition-timing-function: ease-out;
-  /* A litttttle slower on the way in */
-  transition: 0.25s;
-}
-</style>
-
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"
 {% endblock %}
-
-
 {% block content %}
 <body class="theme theme_font_neoskeuo theme_space_neoskeuo theme_color_neoskeuo">
     <h1 style="padding-top: 30px;">Commodity Price Prediction Engine</h1>
@@ -141,30 +13,16 @@
 
 	</br>
 
-
-  <!--
-    <a href="#" style="margin-left: 20px;" class="button">Post</a>
-
-    <a href="#" style="margin-left: 20px;" class="button">Archives</a>
-  -->
-
-
-
-
 <div class="neudiv" style="width: 100%;">
-
   <div class="" style="width: 100%">
     <div class="contentBx">
-
       <canvas id="myChart"></canvas>
-
-
-
     </div>
   </div>
 </div>
 </br>
 </br>
+
 <div class="neudiv" style="width: 100%;">
 
   <div class="" style="width: 100%">
@@ -176,9 +34,9 @@
         </div>
         <select class="custom-select" id="model-selection">
           <option selected>Choose Model</option>
-          <option value="1">10 dps univariate LSTM</option>
-          <option value="2">20 dps univariate LSTM</option>
-          <option value="3">30 dps univariate LSTM</option>
+          <option value="1">10 dps univariate LSTM (soybean oil)</option>
+          <option value="2">20 dps univariate LSTM (soybean oil)</option>
+          <option value="3">30 dps univariate LSTM (soybean oil)</option>
         </select>
       </div>
 
@@ -239,10 +97,8 @@
 </div>
 
 </body>
-<!-- Optional JavaScript -- filenmae>
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-
 <script src="{{ url_for('static', filename='index.js')}}?10"></script>
 {% endblock %}
